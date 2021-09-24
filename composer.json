@@ -14,7 +14,8 @@
         "infyomlabs/laravel-generator": "^3.0",
         "laravelcollective/html": "^6.2",
         "infyomlabs/adminlte-templates": "^3.0",
-        "doctrine/dbal": "~2.3"
+        "doctrine/dbal": "~2.3",
+        "infyomlabs/generator-builder": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
