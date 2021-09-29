@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AppBaseController;
 
 class AuthController extends AppBaseController
@@ -17,25 +18,27 @@ class AuthController extends AppBaseController
     {
         $attr = $request->validate([
             'name' => 'required|string|max:255',
-            // 'password' => 'required|string|min:6|confirmed',
-            // 'id_no' => 'required|unique:oracle.haram.prm_users|string|max:255',
-            // 'mobile_no' => 'required|string|max:15',
-            // 'email' => 'required|string|email|unique:oracle.haram.prm_users,email',
-            'email' => 'required|string|email',
-            // 'nation_id' => 'required|string|max:5',
-            // 'gender' => Rule::in(['1', '2']),
+            'password' => 'required|string|min:6|confirmed',
+            // 'password' => 'required|string|min:6',
+            'id_no' => 'required|unique:users|string|max:255',
+            'mobile_no' => 'required|string|max:15',
+            'email' => 'required|string|email|unique:users,email',
+            'nation_id' => 'required|string|max:5',
+            'passport_no' => 'string|min:4',
+            'gender' => Rule::in(['1', '2']),
         ]);
-        // dd($request['password']);
+
         $user = User::create([
-            'name' => $attr['name'],
+            'name' => $request['name'],
             'password' => bcrypt($request['password']),
-            // 'id_no' => $attr['id_no'],
-            // 'mobile_no' => $attr['mobile_no'],
             'email' => $request['email'],
-            // 'nation_id' => $attr['nation_id'],
-            // 'gender' => $attr['gender'],
-            // 'user_type' => 4,
-            // 'user_status' => 1,
+            'mobile_no' => $attr['mobile_no'],
+            'id_no' => $request['id_no'],
+            'passport_no' => $request['passport_no'],
+            'nation_id' => $request['nation_id'],
+            'gender' => $request['gender'],
+            'user_type' => 1, 
+            'user_status' => 1,
         ]);
         
         return $this->sendResponse($user , 'Registered successfully');
@@ -49,14 +52,12 @@ class AuthController extends AppBaseController
             'password' => 'required|string|min:6' , 
             // 'device_id' => 'required|string|min:10' , 
         ]);
-        // dd('login2');
-        $user = User::where('email', $request->email)->first();
-
         
-
+        $user = User::where('email', $attr['email'])->first();
+        
         if(isset($user)){
             $credentials = $request->only('email', 'password');
-            // $credentials['user_status'] = 1;       
+            $credentials['user_status'] = 1;       
         }
 
         if (!$user || !Auth::attempt($credentials)) {
@@ -65,7 +66,7 @@ class AuthController extends AppBaseController
         }
 
         $data = [
-            'token' => auth()->user()->createToken($request->email)->plainTextToken,
+            'token' => auth()->user()->createToken($attr['email'])->plainTextToken,
             'profile' => $user->toArray()
         ];
 
@@ -82,7 +83,7 @@ class AuthController extends AppBaseController
 
     public function editProfile($id, Request $request)
     {
-        $user = User::where('id_no', '=', $id)->where('user_type', '=', 4)->first();
+        $user = User::where('id_no', '=', $id)->where('user_status', '=', 1)->first();
 
         if (empty($user)) {
             return $this->sendError('user not found');

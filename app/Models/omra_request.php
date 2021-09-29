@@ -26,7 +26,12 @@ class omra_request extends Model
 
     public $fillable = [
         'name',
-        'omra_date'
+        'request_date',
+        'permission_type',
+        'permission_date',
+        'etamarna_pw',
+        'notes' , 
+        'user_id'
     ];
 
     /**
@@ -36,8 +41,10 @@ class omra_request extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string',
-        'omra_date' => 'date'
+        'name' => 'string|required',
+        'request_date' => 'date',
+        'permission_date' => 'date|required',
+        'permission_type' => 'required|number'
     ];
 
     /**
@@ -46,7 +53,10 @@ class omra_request extends Model
      * @var array
      */
     public static $rules = [
-        
+        'name' => 'required',
+        'permission_type' => 'required',
+        'etamarna_pw' => 'required',
+        'permission_date' => 'required|date'
     ];
 
     

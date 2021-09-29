@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\Createomra_requestAPIRequest;
-use App\Http\Requests\API\Updateomra_requestAPIRequest;
+use Response;
+use Carbon\Carbon;
 use App\Models\omra_request;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use App\Http\Requests\API\Createomra_requestAPIRequest;
+use App\Http\Requests\API\Updateomra_requestAPIRequest;
 
 /**
  * Class omra_requestController
@@ -49,10 +50,16 @@ class omra_requestAPIController extends AppBaseController
      */
     public function store(Createomra_requestAPIRequest $request)
     {
+        $request->merge([
+                        'user_id' => auth()->user()->id , 
+                        'request_date' => Carbon::now()
+                        ]);
+
         $input = $request->all();
 
         /** @var omra_request $omraRequest */
         $omraRequest = omra_request::create($input);
+
 
         return $this->sendResponse($omraRequest->toArray(), 'Omra Request saved successfully');
     }

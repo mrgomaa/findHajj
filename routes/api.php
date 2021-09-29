@@ -27,3 +27,6 @@ Route::post('/auth/register',[App\Http\Controllers\AuthController::class, 'regis
 Route::post('/auth/login',[App\Http\Controllers\AuthController::class, 'login'])->name('auth.login');
 
 
+
+
+Route::resource('nations', App\Http\Controllers\API\NationAPIController::class);

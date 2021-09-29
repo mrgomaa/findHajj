@@ -23,6 +23,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'mobile_no',
+        'id_no',
+        'passport_no',
+        'nation_id',
+        'email_verified_at',
+        'user_type',
+        'user_status',
+        'gender'
     ];
 
     /**
@@ -44,7 +52,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-      /**
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'name' => 'required',
+        'mobile' => 'required|unique|number',
+        'email' => 'required|number',
+        'id_no' => 'required|number',
+    ];
+
+    
+    /**
      * Create a new personal access token for the user.
      *
      * @param  string  $name
