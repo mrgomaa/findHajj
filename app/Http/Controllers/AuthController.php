@@ -19,11 +19,10 @@ class AuthController extends AppBaseController
         $attr = $request->validate([
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
-            // 'password' => 'required|string|min:6',
-            'id_no' => 'required|unique:users|string|max:255',
+            'id_no' => 'unique:users|numeric',
             'mobile_no' => 'required|string|max:15',
             'email' => 'required|string|email|unique:users,email',
-            'nation_id' => 'required|string|max:5',
+            'nation_id' => 'required|numeric',
             'passport_no' => 'string|min:4',
             'gender' => Rule::in(['1', '2']),
         ]);
