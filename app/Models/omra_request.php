@@ -53,7 +53,7 @@ class omra_request extends Model
     public static $rules = [
         'name' => 'required',
         'permission_type' => 'required',
-        'etamarna_pw' => 'required',
+        'etamarna_pw' => 'string|min:4',
         'permission_date' => 'required|date'
     ];
 

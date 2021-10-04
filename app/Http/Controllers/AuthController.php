@@ -20,8 +20,8 @@ class AuthController extends AppBaseController
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
             'id_no' => 'unique:users|numeric',
-            'mobile_no' => 'required|string|max:15',
-            'email' => 'required|string|email|unique:users,email',
+            'mobile_no' => 'unique:users|required|numeric|max:15',
+            'email' => 'string|email|unique:users',
             'nation_id' => 'required|numeric',
             'passport_no' => 'string|min:4',
             'gender' => Rule::in(['1', '2']),
@@ -47,15 +47,15 @@ class AuthController extends AppBaseController
     public function login(Request $request)
     {
         $attr = $request->validate([
-            'email' => 'required|string|min:5',
+            'mobile_no' => 'required|string|min:10',
             'password' => 'required|string|min:6' , 
             // 'device_id' => 'required|string|min:10' , 
         ]);
         
-        $user = User::where('email', $attr['email'])->first();
+        $user = User::where('mobile_no', $attr['mobile_no'])->first();
         
         if(isset($user)){
-            $credentials = $request->only('email', 'password');
+            $credentials = $request->only('mobile_no', 'password');
             $credentials['user_status'] = 1;       
         }
 
@@ -65,7 +65,7 @@ class AuthController extends AppBaseController
         }
 
         $data = [
-            'token' => auth()->user()->createToken($attr['email'])->plainTextToken,
+            'token' => auth()->user()->createToken($attr['mobile_no'])->plainTextToken,
             'profile' => $user->toArray()
         ];
 
@@ -82,13 +82,13 @@ class AuthController extends AppBaseController
 
     public function editProfile($id, Request $request)
     {
-        $user = User::where('id_no', '=', $id)->where('user_status', '=', 1)->first();
+        $user = User::where('id', '=', $id)->where('user_status', '=', 1)->first();
 
         if (empty($user)) {
             return $this->sendError('user not found');
         }
 
-        $user->fill($request->only('user_name', 'mobile_no', 'email'));
+        $user->fill($request->only('name', 'mobile_no', 'email','id_no'));
         $user->save();
 
         return $this->sendResponse($user->toArray(), 'User updated successfully');
