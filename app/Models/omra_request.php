@@ -41,10 +41,8 @@ class omra_request extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string|required',
         'request_date' => 'date',
-        'permission_date' => 'date|required',
-        'permission_type' => 'required|number'
+        'permission_date' => 'date'
     ];
 
     /**
