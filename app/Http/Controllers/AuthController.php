@@ -16,16 +16,22 @@ class AuthController extends AppBaseController
 
     public function register(Request $request)
     {
-        $attr = $request->validate([
+        $attr = $request->validate(
+            [
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
             'id_no' => 'unique:users|numeric',
-            'mobile_no' => 'unique:users|required|numeric|min:10',
+            'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15|unique:users',
             'email' => 'nullable|string|email|unique:users',
             'nation_id' => 'required|numeric|exists:nations,id',
             'passport_no' => 'string|min:4',
             'gender' => Rule::in(['1', '2']),
-        ]);
+            ],
+            [
+             'mobile_no.min' => 'The mobile no must be at least 10 numbers.',
+             'mobile_no.max' => 'The mobile no must not be greater than 15 numbers.'
+            ]
+        );
 
         $user = User::create([
             'name' => $request['name'],
