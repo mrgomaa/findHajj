@@ -22,7 +22,7 @@ class AuthController extends AppBaseController
             'id_no' => 'unique:users|numeric',
             'mobile_no' => 'unique:users|required|numeric|min:10',
             'email' => 'nullable|string|email|unique:users',
-            'nation_id' => 'required|numeric',
+            'nation_id' => 'required|numeric|exists:nations,id',
             'passport_no' => 'string|min:4',
             'gender' => Rule::in(['1', '2']),
         ]);
