@@ -20,7 +20,7 @@ class AuthController extends AppBaseController
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
             'id_no' => 'unique:users|numeric',
-            'mobile_no' => 'unique:users|required|numeric|max:15',
+            'mobile_no' => 'unique:users|required|numeric|min:10',
             'email' => 'string|email|unique:users',
             'nation_id' => 'required|numeric',
             'passport_no' => 'string|min:4',
