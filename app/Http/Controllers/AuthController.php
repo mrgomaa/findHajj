@@ -21,7 +21,7 @@ class AuthController extends AppBaseController
             'password' => 'required|string|min:6|confirmed',
             'id_no' => 'unique:users|numeric',
             'mobile_no' => 'unique:users|required|numeric|min:10',
-            'email' => 'string|email|unique:users',
+            'email' => 'nullable|string|email|unique:users',
             'nation_id' => 'required|numeric',
             'passport_no' => 'string|min:4',
             'gender' => Rule::in(['1', '2']),
