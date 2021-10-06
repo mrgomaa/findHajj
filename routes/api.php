@@ -23,11 +23,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('dead_omra_requests', App\Http\Controllers\API\DeadOmraRequestAPIController::class);
     Route::resource('volunteer_requests', App\Http\Controllers\API\VolunteerRequestAPIController::class);
 
-    Route::resource('nations', App\Http\Controllers\API\NationAPIController::class);
     Route::resource('volunteer_services', App\Http\Controllers\API\VolunteerServiceAPIController::class);
     Route::resource('cities', App\Http\Controllers\API\cityAPIController::class);
 });
 
+Route::resource('nations', App\Http\Controllers\API\NationAPIController::class);
 
 Route::post('/auth/register',[App\Http\Controllers\AuthController::class, 'register'])->name('auth.register');
 Route::post('/auth/login',[App\Http\Controllers\AuthController::class, 'login'])->name('auth.login');
