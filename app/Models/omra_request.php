@@ -31,7 +31,10 @@ class omra_request extends Model
         'permission_date',
         'etamarna_pw',
         'notes' , 
-        'user_id'
+        'user_id',
+        'request_status',
+        'id_no',
+        'passport_no'
     ];
 
     /**
@@ -54,7 +57,9 @@ class omra_request extends Model
         'name' => 'required',
         'permission_type' => 'required',
         'etamarna_pw' => 'string|min:4',
-        'permission_date' => 'required|date'
+        'permission_date' => 'required|date',
+        'id_no' => 'nullable|numeric',
+        'passport_no' => 'nullable|string|min:4'
     ];
 
     

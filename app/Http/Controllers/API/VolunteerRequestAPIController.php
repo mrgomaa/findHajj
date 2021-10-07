@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use Response;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\VolunteerRequest;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateVolunteerRequestAPIRequest;
 use App\Http\Requests\API\UpdateVolunteerRequestAPIRequest;
-use App\Models\VolunteerRequest;
-use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class VolunteerRequestController
@@ -49,6 +50,11 @@ class VolunteerRequestAPIController extends AppBaseController
      */
     public function store(CreateVolunteerRequestAPIRequest $request)
     {
+        $request->merge([
+            'user_id' => auth()->user()->id , 
+            'request_date' => Carbon::now()
+            ]);
+            
         $input = $request->all();
 
         /** @var VolunteerRequest $volunteerRequest */

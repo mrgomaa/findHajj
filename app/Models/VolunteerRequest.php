@@ -34,7 +34,9 @@ class VolunteerRequest extends Model
         'mobile_no',
         'facebook_link',
         'volunteer_service_id',
-        'notes'
+        'notes',
+        'user_id',
+        'request_date'
     ];
 
     /**
@@ -48,7 +50,8 @@ class VolunteerRequest extends Model
         'city_id' => 'integer',
         'mobile_no' => 'string',
         'facebook_link' => 'string',
-        'volunteer_service_id' => 'integer'
+        'volunteer_service_id' => 'integer',
+        'request_date' => 'date',
     ];
 
     /**

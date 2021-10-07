@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use Response;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\DeadOmraRequest;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateDeadOmraRequestAPIRequest;
 use App\Http\Requests\API\UpdateDeadOmraRequestAPIRequest;
-use App\Models\DeadOmraRequest;
-use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class DeadOmraRequestController
@@ -49,6 +50,11 @@ class DeadOmraRequestAPIController extends AppBaseController
      */
     public function store(CreateDeadOmraRequestAPIRequest $request)
     {
+        $request->merge([
+            'user_id' => auth()->user()->id , 
+            'request_date' => Carbon::now()
+            ]);
+            
         $input = $request->all();
 
         /** @var DeadOmraRequest $deadOmraRequest */

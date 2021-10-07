@@ -34,7 +34,12 @@ class DeadOmraRequest extends Model
         'dead_name',
         'dead_age',
         'notes',
-        'dead_gender'
+        'dead_gender',
+        'user_id',
+        'request_date' , 
+        'request_status',
+        'id_no',
+        'passport_no'
     ];
 
     /**
@@ -48,7 +53,8 @@ class DeadOmraRequest extends Model
         'request_sender_name' => 'string',
         'dead_name' => 'string',
         'dead_age' => 'integer',
-        'notes' => 'string'
+        'notes' => 'string',
+        'request_date' => 'date',
     ];
 
     /**
@@ -61,7 +67,9 @@ class DeadOmraRequest extends Model
         'request_sender_name' => 'required',
         'dead_name' => 'required',
         'dead_age' => 'required|numeric',
-        'dead_gender' =>  'numeric'
+        'dead_gender' =>  'numeric',
+        'id_no' => 'nullable|numeric',
+        'passport_no' => 'nullable|string|min:4'
     ];
 
     
