@@ -63,7 +63,7 @@ class DeadOmraRequest extends Model
      * @var array
      */
     public static $rules = [
-        'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15|unique:users',
+        'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
         'request_sender_name' => 'required',
         'dead_name' => 'required',
         'dead_age' => 'required|numeric',
