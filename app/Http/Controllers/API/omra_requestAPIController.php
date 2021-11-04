@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Response;
 use Carbon\Carbon;
+use App\Models\allRequest;
 use App\Models\omra_request;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -131,4 +132,21 @@ class omra_requestAPIController extends AppBaseController
 
         return $this->sendSuccess('Omra Request deleted successfully');
     }
+
+    public function showAllRequests(Request $request)
+    {
+        $query = allRequest::query()->where('user_id',auth()->user()->id);
+
+        if ($request->get('skip')) {
+            $query->skip($request->get('skip'));
+        }
+        if ($request->get('limit')) {
+            $query->limit($request->get('limit'));
+        }
+
+        $allRequests = $query->get();
+
+        return $this->sendResponse($allRequests->toArray(), 'all Requests retrieved successfully');
+    }
+
 }
